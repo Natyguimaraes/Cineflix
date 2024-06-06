@@ -6,41 +6,29 @@ body {
 
 .Container {
   display: flex;
-  justify-content: left;
-}
-
-.Topo {
-  width: 100%;
+  justify-content: center; /* Centralize o conteúdo horizontalmente */
 }
 
 header {
   background-color: #000000;
-  padding: 55px 0; /* Aumentei o padding para 20px em vez de 10px */
-  border-bottom: 5px solid;
-  border-color: #007FFF;
-
+  padding: 20px 0; /* Reduzi o padding para 20px */
+  border-bottom: 5px solid #007FFF; /* Melhorei a cor da borda */
 }
 
 nav {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 nav img {
-  width: 150px;
+  width: 100px; /* Ajuste o tamanho do logo conforme necessário */
   height: auto;
-  border: 1px solid;
-  border-color: white;
-  border-radius: 50%;
-  margin-left: 20px; /* Adicionei uma margem à direita */
+  margin-right: 10px; /* Adicionei uma margem à direita */
 }
 
 nav span {
   color: white;
   font-size: 2rem;
   font-weight: bold;
-  margin-left: 10px;
   font-family: 'Source Sans Pro', sans-serif;
 }
-

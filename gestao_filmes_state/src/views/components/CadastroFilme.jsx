@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../styles/index.css';
+import '../styles/adicionar.css';
 import { FaFilm } from 'react-icons/fa'; // ícone de filme
 
 function FormCadastro() {
@@ -27,34 +27,34 @@ function FormCadastro() {
     try {
       console.log("dados a serem enviados:", formValores);
       const response = await fetch('http://localhost:3000/filmes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formValores)
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formValores)
       });
-
+  
       if (!response.ok) {
-        throw new Error(`Erro ao enviar a solicitação: ${response.status}`);
+          throw new Error(`Erro ao enviar a solicitação: ${response.status}`);
       }
-
+  
       const json = await response.json();
       console.log(json);
       // Limpar os campos após o envio bem-sucedido
       setFormValores({
-        titulo: '',
-        diretor: '',
-        ano_lancamento: '',
-        genero: '',
-        sinopse: '',
-        poster_url: ''
+          titulo: '',
+          diretor: '',
+          ano_lancamento: '',
+          genero: '',
+          sinopse: '',
+          poster_url: ''
       });
       // Adicionar feedback visual para o usuário, se necessário
-    } catch (err) {
+  } catch (err) {
       console.error("Erro ao enviar os dados", err);
       // Define a mensagem de erro para exibir ao usuário
       setErrorMessage('Erro ao enviar os dados. Por favor, tente novamente.');
-    }
+  }
   };
 
   return (
@@ -82,7 +82,7 @@ function FormCadastro() {
               placeholder="Diretor"
               value={formValores.diretor}
               onChange={handleChange}
-              required
+              
             />
           </div>
           <div className="input_container">
@@ -93,7 +93,7 @@ function FormCadastro() {
               placeholder="Ano de Lançamento"
               value={formValores.ano_lancamento}
               onChange={handleChange}
-              required
+             
             />
           </div>
           <div className="input_container">
@@ -104,7 +104,7 @@ function FormCadastro() {
               placeholder="Gênero"
               value={formValores.genero}
               onChange={handleChange}
-              required
+             
             />
           </div>
           <div className="input_container">
@@ -115,7 +115,7 @@ function FormCadastro() {
               placeholder="Sinopse"
               value={formValores.sinopse}
               onChange={handleChange}
-              required
+              
             />
           </div>
           <div className="input_container">
