@@ -1,6 +1,8 @@
 import '../views/styles/index.css'
 import Topo from './components/Topo'
 import FormCadastro from './components/CadastroFilme';
+import ReadFilme from './components/readFilme';
+
 function App() {
 
   return (
@@ -8,6 +10,7 @@ function App() {
       <div>
        <Topo/>
        <FormCadastro />
+       <ReadFilme />
       </div>
     </>
   );
