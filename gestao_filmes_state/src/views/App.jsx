@@ -2,6 +2,7 @@ import '../views/styles/index.css'
 import Topo from './components/Topo'
 import FormCadastro from './components/CadastroFilme';
 import ReadFilme from './components/readFilme';
+import Home from './components/home';
 
 function App() {
 
@@ -9,8 +10,7 @@ function App() {
     <>
       <div>
        <Topo/>
-       <FormCadastro />
-       <ReadFilme />
+       <Home />
       </div>
     </>
   );

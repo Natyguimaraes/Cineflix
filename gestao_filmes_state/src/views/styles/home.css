@@ -1,0 +1,29 @@
+
+
+.texto-home {
+    color: white;
+    font-size: 40px;
+    padding-right: 20px;
+
+}
+
+.Container-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.texto-home,
+.img-home {
+    flex: 1;
+}
+
+
+.img-home img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
