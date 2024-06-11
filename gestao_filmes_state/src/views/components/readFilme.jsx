@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/index.css';
+import '../styles/read.css';
 import Home from './home';
-
+import { FaTrash } from 'react-icons/fa';
 
 function ReadFilme() {
-
   const [secaoAtual, setSecaoAtual] = useState('readFilme');
-    
-        const cliqueSecao = (secao) => {
-            setSecaoAtual(secao);
-        };
-
   const [dadosCadastrados, setDadosCadastrados] = useState([]);
+  const [formValores, setFormValores] = useState({
+    id: ''
+  });
 
   useEffect(() => {
-    // Aqui você faz a requisição GET para obter os dados já cadastrados
     async function fetchDadosCadastrados() {
       try {
         const response = await fetch('http://localhost:3000/filmes');
@@ -28,52 +24,85 @@ function ReadFilme() {
       }
     }
     fetchDadosCadastrados();
-  }, []); // O array vazio assegura que o useEffect será executado apenas uma vez após a montagem do componente
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValores(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e, filme) => {
+    e.preventDefault();
+
+    try {
+      console.log("ID a ser deletado:", filme.id);
+      const response = await fetch(`http://localhost:3000/filmes/${filme.id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error(`Erro ao excluir filme: ${response.status}`);
+      }
+      // Atualize a lista de filmes após a exclusão bem-sucedida
+      const updatedData = dadosCadastrados.filter(item => item.id !== filme.id);
+      setDadosCadastrados(updatedData);
+    } catch (error) {
+      console.error('Erro ao excluir filme:', error);
+    }
+  };
 
   return (
     <div>
       {secaoAtual === 'readFilme' && (
-     <><div className="container_tabela">
-          <h1 className="h1_visualizacao"> Dados Cadastrados </h1>
-          <table>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Titulo</th>
-                <th>Diretor</th>
-                <th>Ano de lançamento</th>
-                <th>Gênero</th>
-                <th>Sinopse</th>
-                <th>Url do Poster</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dadosCadastrados.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.id}</td>
-                  <td>{item.titulo}</td>
-                  <td>{item.diretor}</td>
-                  <td>{item.ano_lancamento}</td>
-                  <td>{item.genero}</td>
-                  <td>{item.sinopse}</td>
-                  <td>{item.poster_url}</td>
+        <>
+          <div className="container_tabela">
+            <h1 className="h1_visualizacao"> SUA LISTA DE FILMES </h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Titulo</th>
+                  <th>Diretor</th>
+                  <th>Ano de lançamento</th>
+                  <th>Gênero</th>
+                  <th>Sinopse</th>
+                  <th>Url do Poster</th>
+                  <th>Ação</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div><div className="home_voltar2">
-            <button className="button_home_voltar" onClick={() => cliqueSecao('home')}> Voltar a página inicial </button>
-          </div></>
-
+              </thead>
+              <tbody>
+                {dadosCadastrados.map((filme, index) => (
+                  <tr key={index}>
+                    <td>{filme.id}</td>
+                    <td>{filme.titulo}</td>
+                    <td>{filme.diretor}</td>
+                    <td>{filme.ano_lancamento}</td>
+                    <td>{filme.genero}</td>
+                    <td>{filme.sinopse}</td>
+                    <td>{filme.poster_url}</td>
+                    <td>
+                      {/* Ícone de exclusão */}
+                      <FaTrash onClick={(e) => handleSubmit(e, filme)} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="home_voltar2">
+            <button className="button_home_voltar" onClick={() => setSecaoAtual('home')}> Voltar a página inicial </button>
+          </div>
+        </>
       )}
 
-<div className='secao'>
+      <div className='secao'>
         {secaoAtual === 'home' && <Home />}
-    </div>
-
-
+      </div>
     </div>
   );
 }
 
 export default ReadFilme;
+

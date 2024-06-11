@@ -3,6 +3,7 @@ import '../styles/home.css';
 import { FaFilm } from 'react-icons/fa'; // ícone de filme
 import FormCadastro from './CadastroFilme';
 import ReadFilme from './readFilme';
+import DeletarFilme from './delete'
 
 function Home() {
 
@@ -35,7 +36,7 @@ return(
   </div>
   <div className="options">
     <button onClick={() => cliqueSecao('#')} className="botao-menu"> Atualizar lista </button>
-    <button onClick={() => cliqueSecao('#')} className='botao-menu'> Deletar filme da lista </button>
+    <button onClick={() => cliqueSecao('delete')} className='botao-menu'> Deletar filme da lista </button>
   </div>
 </div>
 
@@ -51,6 +52,9 @@ return(
                 {secaoAtual ==='readFilme' && <ReadFilme />}
             </div>
 
+            <div className='secao'>
+                {secaoAtual ==='delete' && <DeletarFilme />}
+            </div>
 
         </div>
 </div>
