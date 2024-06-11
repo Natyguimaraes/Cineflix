@@ -1,6 +1,7 @@
 import '../views/styles/index.css'
 import Topo from './components/Topo'
 import Home from './components/home';
+import Rodape from './components/rodape';
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
       <div>
        <Topo/>
        <Home />
+       <Rodape />
       </div>
     </>
   );
