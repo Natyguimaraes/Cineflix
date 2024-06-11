@@ -21,7 +21,7 @@
     border-radius: 5px;
   }
   
-  button {
+  .button_cad, .botao-menu {
     display: block;
     width: 100%;
     padding: 10px;
@@ -32,7 +32,7 @@
     cursor: pointer;
   }
   
-  button:hover {
+  .button_cad:hover {
     background-color: #0056b3;
   }
   
@@ -41,4 +41,31 @@
     margin-top: 10px;
   }
   
+  .button_home_voltar {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1rem;
+    color: #333; /* Cor do ícone */
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:25px auto; 
+    
+  }
+  
+  .button_home_voltar:hover {
+    color: #555; /* Cor do ícone ao passar o mouse */
+  }
+  
+  .home_icon {
+    font-size: 1.5rem;
+  }
+  
+  .salvar-button{
+    padding: 5px;
+  }
+
   

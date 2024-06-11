@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/adicionar.css';
-import { FaFilm } from 'react-icons/fa'; // ícone de filme
+import { FaFilm, FaHome } from 'react-icons/fa'; // Importe o ícone de casa
+import Home from './home';
 
 function FormCadastro() {
+  const [secaoAtual, setSecaoAtual] = useState('CadastroFilmes');
+  const cliqueSecao = (secao) => {
+    setSecaoAtual(secao);
+  };
+
   const [formValores, setFormValores] = useState({
     titulo: '',
     diretor: '',
@@ -58,82 +64,86 @@ function FormCadastro() {
   };
 
   return (
-    <div className="Container_form">
-      <div className="form">
-        <h1> Cadastro de Filme </h1>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="input_container">
-            <FaFilm className="input_icon" />
-            <input
-              type="text"
-              name="titulo"
-              placeholder="Título do Filme"
-              value={formValores.titulo}
-              onChange={handleChange}
-              required // Campo obrigatório
-            />
+    <div>
+      {secaoAtual === 'CadastroFilmes' && (
+        <>
+          <div className="Container_form">
+            <div className="form">
+              <h1> Cadastro de Filme </h1>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
+              <form onSubmit={handleSubmit}>
+                <div className="input_container">
+                  <FaFilm className="input_icon" />
+                  <input
+                    type="text"
+                    name="titulo"
+                    placeholder="Título do Filme"
+                    value={formValores.titulo}
+                    onChange={handleChange}
+                    required // Campo obrigatório
+                  />
+                </div>
+                <div className="input_container">
+                  <FaFilm className="input_icon" />
+                  <input
+                    type="text"
+                    name="diretor"
+                    placeholder="Diretor"
+                    value={formValores.diretor}
+                    onChange={handleChange} />
+                </div>
+                <div className="input_container">
+                  <FaFilm className="input_icon" />
+                  <input
+                    type="text"
+                    name="ano_lancamento"
+                    placeholder="Ano de Lançamento"
+                    value={formValores.ano_lancamento}
+                    onChange={handleChange} />
+                </div>
+                <div className="input_container">
+                  <FaFilm className="input_icon" />
+                  <input
+                    type="text"
+                    name="genero"
+                    placeholder="Gênero"
+                    value={formValores.genero}
+                    onChange={handleChange} />
+                </div>
+                <div className="input_container">
+                  <FaFilm className="input_icon" />
+                  <input
+                    type="text"
+                    name="sinopse"
+                    placeholder="Sinopse"
+                    value={formValores.sinopse}
+                    onChange={handleChange} />
+                </div>
+                <div className="input_container">
+                  <FaFilm className="input_icon" />
+                  <input
+                    type="text"
+                    name="poster_url"
+                    placeholder="URL do Poster"
+                    value={formValores.poster_url}
+                    onChange={handleChange} />
+                </div>
+                <button className="button_cad" type="submit"> CADASTRAR </button>
+              </form>
+            </div>
           </div>
-          <div className="input_container">
-            <FaFilm className="input_icon" />
-            <input
-              type="text"
-              name="diretor"
-              placeholder="Diretor"
-              value={formValores.diretor}
-              onChange={handleChange}
-              
-            />
+          <div className="home_voltar">
+            <button className="button_home_voltar" onClick={() => cliqueSecao('home')}>
+              <FaHome className="home_icon" />
+            </button>
           </div>
-          <div className="input_container">
-            <FaFilm className="input_icon" />
-            <input
-              type="text"
-              name="ano_lancamento"
-              placeholder="Ano de Lançamento"
-              value={formValores.ano_lancamento}
-              onChange={handleChange}
-             
-            />
-          </div>
-          <div className="input_container">
-            <FaFilm className="input_icon" />
-            <input
-              type="text"
-              name="genero"
-              placeholder="Gênero"
-              value={formValores.genero}
-              onChange={handleChange}
-             
-            />
-          </div>
-          <div className="input_container">
-            <FaFilm className="input_icon" />
-            <input
-              type="text"
-              name="sinopse"
-              placeholder="Sinopse"
-              value={formValores.sinopse}
-              onChange={handleChange}
-              
-            />
-          </div>
-          <div className="input_container">
-            <FaFilm className="input_icon" />
-            <input
-              type="text"
-              name="poster_url"
-              placeholder="URL do Poster"
-              value={formValores.poster_url}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit"> CADASTRAR </button>
-        </form>
+        </>
+      )}
+      <div className='secao'>
+        {secaoAtual === 'home' && <Home />}
       </div>
     </div>
   );
 }
 
 export default FormCadastro;
-

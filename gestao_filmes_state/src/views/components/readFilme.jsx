@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/read.css';
 import Home from './home';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa'; 
 
 function ReadFilme() {
   const [secaoAtual, setSecaoAtual] = useState('readFilme');
   const [dadosCadastrados, setDadosCadastrados] = useState([]);
-  const [formValores, setFormValores] = useState({
-    id: ''
-  });
-
+  const [editIndex, setEditIndex] = useState(null);
+  
   useEffect(() => {
     async function fetchDadosCadastrados() {
       try {
@@ -26,15 +24,7 @@ function ReadFilme() {
     fetchDadosCadastrados();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValores(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e, filme) => {
+  const handleDelete = async (e, filme) => {
     e.preventDefault();
 
     try {
@@ -45,12 +35,47 @@ function ReadFilme() {
       if (!response.ok) {
         throw new Error(`Erro ao excluir filme: ${response.status}`);
       }
-      // Atualize a lista de filmes após a exclusão bem-sucedida
       const updatedData = dadosCadastrados.filter(item => item.id !== filme.id);
       setDadosCadastrados(updatedData);
     } catch (error) {
       console.error('Erro ao excluir filme:', error);
     }
+  };
+
+  const handleUpdate = async (index) => {
+    try {
+      const filme = dadosCadastrados[index];
+      const response = await fetch(`http://localhost:3000/filmes/${filme.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(filme),
+      });
+      if (!response.ok) {
+        throw new Error(`Erro ao atualizar filme: ${response.status}`);
+      }
+      // Recarrega os dados após a atualização bem-sucedida
+      const updatedData = [...dadosCadastrados];
+      setDadosCadastrados(updatedData);
+      setEditIndex(null);
+    } catch (error) {
+      console.error('Erro ao atualizar filme:', error);
+    }
+  };
+
+  const handleEdit = (index) => {
+    setEditIndex(index);
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    const newData = [...dadosCadastrados];
+    newData[index] = {
+      ...newData[index],
+      [name]: value
+    };
+    setDadosCadastrados(newData);
   };
 
   return (
@@ -76,15 +101,19 @@ function ReadFilme() {
                 {dadosCadastrados.map((filme, index) => (
                   <tr key={index}>
                     <td>{filme.id}</td>
-                    <td>{filme.titulo}</td>
-                    <td>{filme.diretor}</td>
-                    <td>{filme.ano_lancamento}</td>
-                    <td>{filme.genero}</td>
-                    <td>{filme.sinopse}</td>
-                    <td>{filme.poster_url}</td>
+                    <td>{editIndex === index ? <input type="text" name="titulo" value={filme.titulo} onChange={(e) => handleChange(e, index)} /> : filme.titulo}</td>
+                    <td>{editIndex === index ? <input type="text" name="diretor" value={filme.diretor} onChange={(e) => handleChange(e, index)} /> : filme.diretor}</td>
+                    <td>{editIndex === index ? <input type="text" name="ano_lancamento" value={filme.ano_lancamento} onChange={(e) => handleChange(e, index)} /> : filme.ano_lancamento}</td>
+                    <td>{editIndex === index ? <input type="text" name="genero" value={filme.genero} onChange={(e) => handleChange(e, index)} /> : filme.genero}</td>
+                    <td>{editIndex === index ? <input type="text" name="sinopse" value={filme.sinopse} onChange={(e) => handleChange(e, index)} /> : filme.sinopse}</td>
+                    <td>{editIndex === index ? <input type="text" name="poster_url" value={filme.poster_url} onChange={(e) => handleChange(e, index)} /> : filme.poster_url}</td>
                     <td>
-                      {/* Ícone de exclusão */}
-                      <FaTrash onClick={(e) => handleSubmit(e, filme)} />
+                    <FaTrash onClick={(e) => handleDelete(e, filme)} />
+{editIndex === index ?
+  <button className="salvar-button" onClick={() => handleUpdate(index)}>Salvar</button> :
+  <FaEdit onClick={() => handleEdit(index)} />
+}
+
                     </td>
                   </tr>
                 ))}
@@ -105,4 +134,3 @@ function ReadFilme() {
 }
 
 export default ReadFilme;
-
